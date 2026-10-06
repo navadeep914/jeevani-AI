@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f766e"><meta name="description" content="Jeevani AI healthcare companion for medical reports, health information, and emergency support.">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Jeevani AI">
+<title>Jeevani AI</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/jeevani.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/jeevani-180.png">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/hospitals.css">
+<link rel="stylesheet" href="/sos.css">
+<link rel="stylesheet" href="/chat.css">
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div id="app"></div>
+<script src="/i18n.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').catch(error => {
+      console.error('Could not register the app service worker:', error);
+    });
+  });
+}
+</script>
+</body>
+</html>

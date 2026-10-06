@@ -1,0 +1,15 @@
+services:
+  jeevani:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      JEEVANI_SECRET: change-this-before-production
+      JEEVANI_DB: /app/data/jeevani.db
+      JEEVANI_UPLOAD_DIR: /app/backend/uploads
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash}
+      GEMINI_FALLBACK_MODEL: ${GEMINI_FALLBACK_MODEL:-gemini-3.8-flash}
+    volumes:
+      - ./data:/app/data
+      - ./backend/uploads:/app/backend/uploads

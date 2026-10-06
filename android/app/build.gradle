@@ -1,0 +1,62 @@
+plugins {
+    id "com.android.application"
+}
+
+def configuredApiBaseUrl = providers.gradleProperty("jeevaniApiBaseUrl").getOrElse("")
+def escapedApiBaseUrl = configuredApiBaseUrl
+        .replace("\\", "\\\\")
+        .replace("\"", "\\\"")
+def releaseSigningPropertiesFile = rootProject.file("keystore.properties")
+def releaseSigningProperties = new Properties()
+if (releaseSigningPropertiesFile.exists()) {
+    releaseSigningPropertiesFile.withInputStream { releaseSigningProperties.load(it) }
+    ["storeFile", "storePassword", "keyAlias", "keyPassword"].each { key ->
+        if (!releaseSigningProperties.getProperty(key)) {
+            throw new GradleException("Missing '${key}' in android/keystore.properties")
+        }
+    }
+    if (!rootProject.file(releaseSigningProperties.getProperty("storeFile")).isFile()) {
+        throw new GradleException("The keystore file configured in android/keystore.properties does not exist")
+    }
+}
+
+android {
+    namespace "com.jeevani.ai"
+    compileSdk 35
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    defaultConfig {
+        applicationId "com.jeevani.ai"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+        buildConfigField "String", "API_BASE_URL", "\"\""
+    }
+
+    if (releaseSigningPropertiesFile.exists()) {
+        signingConfigs {
+            release {
+                storeFile rootProject.file(releaseSigningProperties.getProperty("storeFile"))
+                storePassword releaseSigningProperties.getProperty("storePassword")
+                keyAlias releaseSigningProperties.getProperty("keyAlias")
+                keyPassword releaseSigningProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "API_BASE_URL", "\"http://10.0.2.2:8000\""
+        }
+        release {
+            buildConfigField "String", "API_BASE_URL", "\"${escapedApiBaseUrl}\""
+            if (releaseSigningPropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}

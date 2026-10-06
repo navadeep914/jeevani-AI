@@ -1,0 +1,6 @@
+.sos-contact-actions{display:grid;gap:10px;margin:12px 0}
+.sos-contact-action{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px}
+.sos-history-item{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:12px 0}
+@media(max-width:600px){
+  .sos-contact-action,.sos-history-item{align-items:flex-start;flex-direction:column}
+}

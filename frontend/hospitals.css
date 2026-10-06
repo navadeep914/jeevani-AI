@@ -1,0 +1,15 @@
+.hospital-toolbar{justify-content:space-between;margin-bottom:14px}
+.hospital-map{height:min(58vh,560px);min-height:340px;border:1px solid var(--line);border-radius:16px;z-index:0}
+.hospital-results{margin-top:12px}
+.hospital-actions{justify-content:flex-end}
+.hospital-popup{font:14px/1.5 Inter,system-ui,sans-serif}
+.hospital-popup strong{color:#b42318}
+@media(max-width:600px){
+  .hospital-toolbar{align-items:flex-start}
+  .hospital-toolbar>.row{width:100%}
+  .hospital-toolbar .btn{flex:1;padding:10px 11px}
+  .hospital-map{height:52vh;min-height:300px}
+  .hospital{align-items:flex-start;flex-direction:column}
+  .hospital-actions{justify-content:flex-start}
+  .hospital-actions .btn{padding:10px 11px}
+}
